@@ -14,7 +14,8 @@
 
 ***Reparto de carpetas***
 
-<img title="" src="https://github.com/DuskDegree44/InstElectric/blob/main/imges/2023-03-31-02-33-30-image.png" alt="" data-align="left">src y src2 son las carpetas que contienen el codigo fuente que tendran los arduinos, src supone el esclavo y src2 el maestro
+<img title="" src="https://github.com/DuskDegree44/InstElectric/blob/main/imges/2023-03-31-02-33-30-image.png" alt="" data-align="left">
+src y src2 son las carpetas que contienen el codigo fuente que tendran los arduinos, src supone el esclavo y src2 el maestro
 
 ![](https://github.com/DuskDegree44/InstElectric/blob/main/imges/2023-03-31-02-34-49-image.png)
 
