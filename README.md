@@ -22,4 +22,6 @@ src y src2 son las carpetas que contienen el codigo fuente que tendran los ardui
 
 En .pio se almacenan automaticamente las librerias de terceros que utiliza el proyecto, en este caso hasta el momento solo se a utilizado DHT `#include <DHT.h>` como libreria de terceros, de ahi en fuera todo esta en `#include <Arduino.h>`
 
+En ejemplos unicamente aparecen como se utilizan los modulos por separado
+
 
