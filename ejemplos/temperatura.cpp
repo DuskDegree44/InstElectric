@@ -1,68 +1,25 @@
-#include <Arduino.h>
-// Incluimos librería sensor de temperatura
+// Incluimos librería
 #include <DHT.h>
+#include <Arduino.h>
 // Definimos el pin digital donde se conecta el sensor
 #define DHTPIN 2
 // Dependiendo del tipo de sensor
 #define DHTTYPE DHT11
-
-
-/*
----------------
----Variables---
----------------
-*/
+ 
 // Inicializamos el sensor DHT11
 DHT dht(DHTPIN, DHTTYPE);
-
-int led = 7; //PIN usado para lED
-int PIR = 8; //PIN usado para Sensor
-int valor; //Variable para el valor del Sensor.
-int analogPin=0; //Fotorres var
-int valorLDR=0; //fotorres var
-
-
-/*
-------------------
----Setup y loop--
-------------------
-*/
+ 
 void setup() {
-  pinMode(led,OUTPUT); //Declaramos el LED de tipo salida
-  pinMode(PIR,INPUT); //Declaramos al sensor de tipo entrada
+  // Inicializamos comunicación serie
+  Serial.begin(9600);
+ 
+  // Comenzamos el sensor DHT
+  dht.begin();
+ 
 }
 
 void loop() {
-
-}
-
-
-/*
----------------
----Funciones---
----------------
-*/
-int PIRE(){
-  valor = digitalRead(PIR); //Obtenemos el valor del sensor
-  if(valor == HIGH){ // Comparamos el valor si es HIGH esta detectando un movimiento de lo  contrario enviaria un LOW (Tambien pueden comprarse con 0,1)
-    digitalWrite(led,HIGH); // SI el valor es igual a HIGH, encendemos el LED
-  }
-  else{
-     digitalWrite(led,LOW); //Si el valor es diferente de HIGH apagamos el LED.
- }
- return valor;
-}
-
-int fotores(){
-    valorLDR=analogRead(analogPin);
-    Serial.println(valorLDR);
-    delay(400);
-
-    return valorLDR;
-}
-
-float temperatura(){
-      // Esperamos 5 segundos entre medidas
+    // Esperamos 5 segundos entre medidas
   delay(5000);
  
   // Leemos la humedad relativa
@@ -96,6 +53,5 @@ float temperatura(){
   Serial.print(" *C ");
   Serial.print(hif);
   Serial.println(" *F");
-
-  return h, t, f;
+ 
 }
