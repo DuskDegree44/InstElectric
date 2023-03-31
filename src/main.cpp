@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Wire.h>   // Librería para la comunicación I2C
 // Incluimos librería sensor de temperatura
 #include <DHT.h>
 // Definimos el pin digital donde se conecta el sensor
@@ -30,6 +31,8 @@ int valorLDR=0; //fotorres var
 void setup() {
   pinMode(led,OUTPUT); //Declaramos el LED de tipo salida
   pinMode(PIR,INPUT); //Declaramos al sensor de tipo entrada
+  dht.begin();
+  Wire.begin();
 }
 
 void loop() {
@@ -44,18 +47,26 @@ void loop() {
 */
 int PIRE(){
   valor = digitalRead(PIR); //Obtenemos el valor del sensor
+
   if(valor == HIGH){ // Comparamos el valor si es HIGH esta detectando un movimiento de lo  contrario enviaria un LOW (Tambien pueden comprarse con 0,1)
     digitalWrite(led,HIGH); // SI el valor es igual a HIGH, encendemos el LED
   }
   else{
-     digitalWrite(led,LOW); //Si el valor es diferente de HIGH apagamos el LED.
- }
- return valor;
+    digitalWrite(led,LOW); //Si el valor es diferente de HIGH apagamos el LED.
+  }
+  
+  Serial.print('Valor de PIR: ');
+  Serial.print(valor);
+  Serial.println('--------------------');
+
+  return valor;
 }
 
 int fotores(){
     valorLDR=analogRead(analogPin);
+    Serial.print('Valor de fotorresistencia: ');
     Serial.println(valorLDR);
+    Serial.println('--------------------');
     delay(400);
 
     return valorLDR;
@@ -75,6 +86,7 @@ float temperatura(){
   // Comprobamos si ha habido algún error en la lectura
   if (isnan(h) || isnan(t) || isnan(f)) {
     Serial.println("Error obteniendo los datos del sensor DHT11");
+    Serial.println('--------------------');
     return;
   }
  
@@ -96,6 +108,11 @@ float temperatura(){
   Serial.print(" *C ");
   Serial.print(hif);
   Serial.println(" *F");
+  Serial.println('--------------------');
 
-  return h, t, f;
+  return h, t, f, hic, hif;
+}
+
+String commun(){
+
 }
