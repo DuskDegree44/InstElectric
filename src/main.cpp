@@ -6,7 +6,8 @@
 #define DHTPIN 2
 // Dependiendo del tipo de sensor
 #define DHTTYPE DHT11
-
+// Direccion de el esclavo
+#define SLAVE_ADDRESS 0x08
 
 /*
 ---------------
@@ -21,6 +22,7 @@ int PIR = 8; //PIN usado para Sensor
 int valor; //Variable para el valor del Sensor.
 int analogPin=0; //Fotorres var
 int valorLDR=0; //fotorres var
+char c;
 
 
 /*
@@ -33,6 +35,7 @@ void setup() {
   pinMode(PIR,INPUT); //Declaramos al sensor de tipo entrada
   dht.begin();
   Wire.begin();
+  Wire.onRequest(commun);
 }
 
 void loop() {
@@ -54,7 +57,7 @@ int PIRE(){
   else{
     digitalWrite(led,LOW); //Si el valor es diferente de HIGH apagamos el LED.
   }
-  
+
   Serial.print('Valor de PIR: ');
   Serial.print(valor);
   Serial.println('--------------------');
@@ -113,6 +116,22 @@ float temperatura(){
   return h, t, f, hic, hif;
 }
 
-String commun(){
+void commun(){
+  // Definir el mensaje a enviar
+  String message = "Hola, maestro! Soy el dispositivo esclavo.";
 
+  // Enviar el mensaje al maestro
+  Wire.write(message.c_str());
+
+  // Solicitar datos al dispositivo esclavo
+  Wire.requestFrom(SLAVE_ADDRESS, 10);  // Solicitar 10 bytes al esclavo
+
+  // Leer los datos enviados por el esclavo
+  while (Wire.available()) {
+    c = Wire.read();
+    Serial.print(c);
+  }
+  Serial.println();
+  
+  delay(5000);  // Esperar 5 segundos antes de hacer otra solicitud
 }
