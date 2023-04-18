@@ -1,26 +1,26 @@
-#include <Wire.h>   // Librería para la comunicación I2C
 #include <Arduino.h>
-// Dirección del dispositivo esclavo (que debe coincidir con la dirección del maestro)
-#define SLAVE_ADDRESS 0x08
-
-void setup() {
-  // Inicializar la comunicación serial para la depuración
-  Serial.begin(9600);
-
-  // Inicializar la comunicación I2C y definir la función para recibir solicitudes
-  Wire.begin(SLAVE_ADDRESS);
-  Wire.onRequest(sendData);
+#include <Wire.h>
+void setup()
+{
+  Wire.begin(4);     // id de esclavo           
+  Wire.onReceive(receiveEvent);  //evento de recepción de mensajes
+  Wire.onRequest(requestEvent);
+  Serial.begin(9600);   // comunicación serial        
 }
 
-void loop() {
-  // Esperar a que llegue una solicitud del maestro
+void loop()
+{
+delay(100);
 }
-
-// Función para enviar datos solicitados por el maestro
-void sendData() {
-  // Definir el mensaje a enviar
-  String message = "Hola, maestro! Soy el dispositivo esclavo.";
-
-  // Enviar el mensaje al maestro
-  Wire.write(message.c_str());
+void receiveEvent(int bytes){ // evento i2c
+  while(Wire.available())  // si existe mensaje por leer
+  {
+    Serial.println("mensaje recibido");
+    int c = Wire.read();  // recibe dato
+    Serial.print(c);    //envia por comunicación serial 
+  }
+}
+// function that executes whenever data is requested from master
+void requestEvent() {
+ Wire.write("Hi");  /*send string on request */
 }
