@@ -83,10 +83,12 @@ void fotores(){
 //enum eTemp{
   //hum, tempC, tempF,hiC, hiF 
 //};
-void temperatura(){
-      // Esperamos 5 segundos entre medidas
+
+void temperatura()
+{
+      
   delay(500);
- 
+  //Esperamos 5 segundos entre medidas
   // Leemos la humedad relativa
   h = dht.readHumidity();
   // Leemos la temperatura en grados centígrados (por defecto)
@@ -153,9 +155,17 @@ void temperatura(){
 //   return s;//Regresa una string
 //   //delay(5000);  // Esperar 5 segundos antes de hacer otra solicitud
 // }
+
+
+void commun(){
+  Wire.requestFrom(SLAVE_ADDRESS, 10);
+  int Val = Wire.read();
+}
+
 void loop() {
-  // Serial.println("Vuelta");
-  int r = Serial.read();
+  // Serial.println("Vuelta"); 
+  
+  int r = Serial.read(); //Sensores conectados al maestro
   if (r == '1')
   {
     // Fotorresistencia 
@@ -210,6 +220,8 @@ void loop() {
     Serial.println(pirValor);
     // Serial.print("Prueba 1");
   }
+
+  
   /* 
   //  este while hace que no reaccione correctamente
   //  el puerto serial 
@@ -298,9 +310,4 @@ void loop() {
 
   } */
 
-}
-
-void commun(){
-  Wire.requestFrom(SLAVE_ADDRESS, 10);
-  int Val = Wire.read();
 }
