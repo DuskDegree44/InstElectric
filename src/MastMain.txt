@@ -82,7 +82,10 @@ void temperatura()
  
   
 }
+#pragma endregion
 
+
+// Fin Funciones
 void commun(){
   Wire.requestFrom(SLAVE_ADDRESS, 10);
   int Val = Wire.read();
@@ -102,14 +105,11 @@ void buscarEsclavos()
     }
 }
 
-#pragma endregion
-// Fin Funciones
-
 
 void loop() {
   // Serial.println("Vuelta"); 
-  #pragma region Serial
   int r = Serial.read(); //Sensores conectados al maestro
+  #pragma region Serial
   if (r == '1')
   {
     // Fotorresistencia 
@@ -164,7 +164,86 @@ void loop() {
     Serial.println(pirValor);
     // Serial.print("Prueba 1");
   }
-#pragma endregion
+    #pragma endregion
+  
+  if (r >= 2)
+  {
+    String conv = String(r);
+    char recurso = conv.charAt(0);
+    char id = conv.charAt(1);
+    
+    if (r == '1')
+    {
+      Wire.beginTransmission(id);
+      Wire.write(1);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+    }
+    
+    
+    if (r == '2')
+    {
+      Wire.beginTransmission(id);
+      Wire.write(2);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+    }
+    
+    if (r == '3')
+    {
+      Wire.beginTransmission(id);
+      Wire.write(3);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+    }
+    
+    if (r == '4')
+    {
+      Wire.beginTransmission(id);
+      Wire.write(4);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+    }
+    if (r == '5')
+    {
+      Wire.beginTransmission(id);
+      Wire.write(5);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+    }
+    if (r == '6')
+    {
+      // Indice de temperatura en grados centigrados
+      Wire.beginTransmission(id);
+      Wire.write(6);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+      // Serial.print("Prueba 6");
+    }
+
+    if (r == '7')
+    {
+      Wire.beginTransmission(id);
+      Wire.write(7);
+      Wire.endTransmission();
+      delay(500);
+      int record = Wire.read();
+      Serial.println(record);
+    }
+  }
+  
   
   if(r == 'E')
   {
@@ -174,9 +253,10 @@ void loop() {
         }
         Serial.println(" Esclavos");
   }
+  
+  if(r == 'R')
+  {
+    int f = Serial.read();
+}
 
-    if(r == 'R')
-    {
-        int f = Serial.read();
-    }
 }
