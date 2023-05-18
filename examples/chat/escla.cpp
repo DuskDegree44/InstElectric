@@ -22,6 +22,7 @@ void setup() {
 }
 
 void loop() {
+  float hola = analogRead(6);
   while (Serial.available()) {
     char c = Serial.read();
     if (c != '\n') {

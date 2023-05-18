@@ -1,0 +1,50 @@
+#include <SoftwareSerial.h>
+#include <Arduino.h>
+#include <Wire.h>
+
+int valor = 0;
+int FR;
+int TMP;
+int PIR;
+int TR;
+int TP;
+
+void setup() {
+  Serial.begin(9600);
+  Wire.begin(1); // Iniciar comunicación I2C como esclavo
+  Wire.onReceive(re); // Llamar a la función enviarValor() cuando se reciba una solicitud
+  Wire.onRequest(qu);
+}
+
+void loop() {
+  TR = analogRead(0);
+  FR = map(TR, 1017, 344, 0, 100);
+  TP = analogRead(1);
+  TMP = map(TP, 358, 20, 100, 0);
+  PIR = digitalRead(11);
+}
+
+void qu(){
+  Wire.write(FR);
+  Wire.write(TMP);
+  Wire.write(PIR);
+}
+
+void re(int numBytes) { 
+  // Leer el byte recibido
+  byte letraRecibida = Wire.read();
+  
+  switch(letraRecibida) {
+    // Si se recibe un carácter 'A' se enciende el led rojo
+    case '2T':
+    	Serial.println(TMP);
+      	break;
+    // Si se recibe un carácter 'B' se enciende el led verde
+    case '2F':
+    	Serial.println(FR);
+      	break;
+    case '2P':
+    	Serial.println(PIR);
+      	break;
+  }	
+}
